@@ -1,0 +1,34 @@
+{
+  "name": "estatehub",
+  "version": "1.0.0",
+  "description": "[GitHub](https://github.com/imryms)\r [LinkedIn](https://www.linkedin.com/in/maryam-altammam/)\r ***\r * [Git hub] (https://github.com/ZELDA3)\r * [Linkedin] (https://www.linkedin.com/in/zainab-salman-832213179?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)\r * [instagram] (https://www.instagram.com/zainab.salman.380_?igsh=MWtqdTF0aXh2ZjJ5Ng==)\r ***",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch server.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imryms/EstateHub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/imryms/EstateHub/issues"
+  },
+  "homepage": "https://github.com/imryms/EstateHub#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "connect-mongo": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^9.2.2",
+    "morgan": "^1.10.1"
+  }
+}
