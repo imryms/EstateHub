@@ -62,7 +62,7 @@ const logInUser = async (req, res) => {
       res.send(`Thanks for signing in, ${user.name}!`)
     })
 
-  } catch (error) {
+  } catch (err) {
     console.error('An error has occurred signing in a user!', error.message)
   }
 }
@@ -72,14 +72,44 @@ const signOutUser = (req, res) => {
     req.session.destroy(() => {
       res.redirect("/")
     })
-  } catch (error) {
-    console.error('An error has occurred signing out a user!', error.message)
-  }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Something went wrong");  }
 }
 
+const changePassword = async (req,res) => {
+  try {
+    if (!req.session.user) {
+    return res.status(401).send("Please log in first");
+    }
+
+    const user = await User.findById(req.session.user._id)
+
+    if (!user) {
+    return res.status(404).send("User not found");
+   }
+
+    const valid = await bcrypt.compare(req.body.currentPassword, user.password)
+
+    if(!valid) {
+      return res.send("Current password is wrong")
+    }
+
+    const newPassword = await bcrypt.hash(req.body.newPassword, 12)
+    user.password = newPassword
+    await user.save()
+
+    res.send("Password updated successfully")
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Something went wrong");
+  }
+}
 
 module.exports = {
   registerUser,
   logInUser,
-  signOutUser
+  signOutUser,
+  changePassword
 }

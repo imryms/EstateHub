@@ -39,3 +39,10 @@ const isPropertyOwner = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports = {
+  isLoggedIn,
+  isClient,
+  isOwner,
+  isPropertyOwner
+}
