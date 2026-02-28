@@ -13,7 +13,6 @@ const propertySchema = new mongoose.Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     type: {
       type: String,
@@ -23,23 +22,25 @@ const propertySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    propertyImage: {
-      type: Image,
-      required: true,
-    },
+    images: [
+      {
+        type: String,
+      },
+    ],
     purpose: {
       type: String,
+      enum: ["sale", "rent"],
       required: true,
     },
     price: {
       type: Number,
       required: true,
-      min: 1,
-      max: 5,
+      min: 0,
     },
     status: {
       type: String,
-      required: true,
+      enum: ["active", "paused", "sold", "rented", "archived"],
+      default: "active",
     },
   },
   { timestamps: true }

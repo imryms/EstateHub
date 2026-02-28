@@ -1,32 +1,35 @@
 const mongoose = require("mongoose")
 
-const appointmentSchema = new mongoose.Schema({
-  listingId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
+const appointmentSchema = new mongoose.Schema(
+  {
+    propertyId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Property",
+      required: true,
+    },
+    clientId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    startDateTime: {
+      type: Date,
+      required: true,
+    },
+    endDateTime: {
+      type: Date,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "confirmed", "cancelled", "completed"],
+      default: "pending",
+    },
+    note: {
+      type: String,
+    },
   },
-  clientId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  startDateTime: {
-    type: String,
-    required: true,
-  },
-  endDateTime: {
-    type: String,
-    required: true,
-  },
-  status: {
-    type: String,
-    required: true,
-  },
-  note: {
-    type: String,
-    required: true,
-  },
-})
+  { timestamps: true }
+)
 
 module.exports = mongoose.model("Appointment", appointmentSchema)
