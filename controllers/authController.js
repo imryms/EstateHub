@@ -77,6 +77,7 @@ const signOutUser = (req, res) => {
   }
 }
 
+
 module.exports = {
   registerUser,
   logInUser,
