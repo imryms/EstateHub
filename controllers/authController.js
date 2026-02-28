@@ -77,33 +77,44 @@ const signOutUser = (req, res) => {
     res.status(500).send("Something went wrong");  }
 }
 
-const changePassword = async (req,res) => {
+const changePassword = async (req, res) => {
   try {
     if (!req.session.user) {
-    return res.status(401).send("Please log in first");
+      return res.status(401).send("Please log in first")
+    }
+
+    const { currentPassword, newPassword, confirmPassword } = req.body
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      return res.status(400).send("All fields are required")
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res.status(400).send("New passwords do not match")
     }
 
     const user = await User.findById(req.session.user._id)
 
     if (!user) {
-    return res.status(404).send("User not found");
-   }
-
-    const valid = await bcrypt.compare(req.body.currentPassword, user.password)
-
-    if(!valid) {
-      return res.send("Current password is wrong")
+      return res.status(404).send("User not found")
     }
 
-    const newPassword = await bcrypt.hash(req.body.newPassword, 12)
-    user.password = newPassword
+    const valid = await bcrypt.compare(currentPassword, user.password)
+
+    if (!valid) {
+      return res.status(400).send("Current password is wrong")
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12)
+    user.password = hashedPassword
+
     await user.save()
 
     res.send("Password updated successfully")
 
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Something went wrong")
   }
 }
 
