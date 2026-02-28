@@ -12,6 +12,9 @@ const PORT = process.env.PORT ? process.env.PORT : 3000
 
 const app = express()
 
+//Routes
+const authRouter = require('./routes/authRouter.js')
+
 const dns = require('dns')
 dns.setServers(['8.8.8.8', '1.1.1.1'])
 
@@ -30,6 +33,9 @@ app.use(session({
     mongoUrl: process.env.MONGODB_URI
   })
 }))
+
+//Routes use
+app.use('/auth', authRouter)
 
 app.get('/', (req, res) => {
   res.send('🏢 EstateHub is open for Real Estate . . . ')
