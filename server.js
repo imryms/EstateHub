@@ -39,8 +39,13 @@ app.use(session({
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.get('/', (req, res) => {
-  res.send('🏢 EstateHub is open for Real Estate . . . ')
+  res.render('index', {
+    user: req.session.user || null
+  })
 })
 
 app.listen(PORT, () => {

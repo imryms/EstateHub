@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EstateHub | Real Estate Simplified</title>
+  <link rel="stylesheet" href="styles/landing.css">
+</head>
+<body class="landing-page">
+
+  <!-- Navigation -->
+  <nav class="nav" id="main-nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo">EstateHub</a>
+      <div class="nav__links">
+        <a href="/" class="nav__link">Home</a>
+        <span class="nav__separator">|</span>
+        <a href="/browse" class="nav__link">Browse</a>
+        <span class="nav__separator">|</span>
+
+        <% if (locals.user) { %>
+          <a href="/user/<%= user._id %>" class="nav__link">My Account</a>
+          <span class="nav__separator">|</span>
+          <a href="/auth/logout" class="nav__link">Logout</a>
+        <% } else { %>
+          <a href="/auth/login" class="nav__link">Login</a>
+          <span class="nav__separator">|</span>
+          <a href="/auth/register" class="nav__link">Register</a>
+        <% } %>
+      </div>
+    </div>
+  </nav>
+
+  <hr class="divider">
+
+  <!-- Hero Section -->
+  <header class="hero" id="hero-section">
+    <div class="hero__container">
+      <div class="hero__content">
+        <h1 class="hero__title">Find the Right Property. List with Confidence.</h1>
+        <p class="hero__description">
+          EstateHub connects property owners and buyers through a seamless,
+          transparent, and structured experience.
+        </p>
+
+        <div class="hero__actions">
+          <a href="/browse" class="btn btn--primary">Explore Listings</a>
+          <a href="/auth/register" class="btn btn--secondary">Start Listing</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- Categories -->
+  <section class="section categories" id="property-categories">
+    <div class="section__container">
+      <h2 class="section__title">Browse by Property Type</h2>
+      <ul class="categories__grid">
+        <li class="categories__item"><a href="/browse?type=villa" class="category-card">Villa</a></li>
+        <li class="categories__item"><a href="/browse?type=apartment" class="category-card">Apartment</a></li>
+        <li class="categories__item"><a href="/browse?type=land" class="category-card">Land</a></li>
+        <li class="categories__item"><a href="/browse?type=building" class="category-card">Building</a></li>
+        <li class="categories__item"><a href="/browse?type=compound" class="category-card">Compound</a></li>
+        <li class="categories__item"><a href="/browse?type=commercial" class="category-card">Commercial</a></li>
+      </ul>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer" id="main-footer">
+    <div class="footer__container">
+      <small class="footer__copyright">© <%= new Date().getFullYear() %> EstateHub. All rights reserved.</small>
+    </div>
+  </footer>
+
+</body>
+</html>
