@@ -1,4 +1,3 @@
-const User = require("../models/User")
 const Appointment = require("../models/Appointment")
 const Property = require("../models/Property")
 
@@ -25,6 +24,7 @@ const createAppointment = async (req, res) => {
 
   } catch (error) {
     console.error("Error creating appointment:", error.message)
+    res.status(500).send("Something went wrong")
   }
 }
 
@@ -55,6 +55,7 @@ const myAppointment = async (req, res) => {
     res.send(appointments)
   } catch (error) {
     console.error("Error showing appointments:", error.message)
+    res.status(500).send("Something went wrong")
   }
 }
 
@@ -100,7 +101,14 @@ const updateAppointmentStatus = async (req, res) => {
       return res.status(403).send("Access denied")
     }
 
+    const allowedStatus = ["confirmed", "cancelled", "completed"]
+
+    if (!allowedStatus.includes(req.body.status)) {
+      return res.status(400).send("Invalid status")
+    }
+
     appointment.status = req.body.status
+
     await appointment.save()
 
     res.send(appointment)
@@ -111,9 +119,68 @@ const updateAppointmentStatus = async (req, res) => {
   }
 }
 
+const deleteAppointment = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id).populate("propertyId")
+
+    if (!appointment) {
+      return res.status(404).send("Appointment not found")
+    }
+
+    const isClient = appointment.clientId.toString() === req.session.user._id.toString()
+    const isOwner = appointment.propertyId.ownerId.toString() === req.session.user._id.toString()
+
+    if (!isClient && !isOwner) {
+      return res.status(403).send("Access denied")
+    }
+
+    await Appointment.findByIdAndDelete(req.params.id)
+
+    res.send("Appointment deleted successfully")
+  } catch (error) {
+    console.error("Error deleting appointment:", error.message)
+    res.status(500).send("Something went wrong")
+  }
+}
+
+const updateAppointment = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id)
+
+    if (!appointment) {
+      return res.status(404).send("Appointment not found")
+    }
+
+    if (appointment.clientId.toString() !== req.session.user._id.toString()) {
+      return res.status(403).send("Access denied")
+    }
+
+    if (appointment.status === "cancelled" || appointment.status === "completed") {
+      return res.status(400).send("Cannot edit a cancelled or completed appointment")
+    }
+
+    const { startDateTime, endDateTime, note } = req.body
+
+    appointment.startDateTime = startDateTime || appointment.startDateTime
+    appointment.endDateTime = endDateTime || appointment.endDateTime
+    appointment.note = note || appointment.note
+    appointment.status = "pending"
+
+
+    await appointment.save()
+
+    res.send(appointment)
+  } catch (error) {
+    console.error("Error updating appointment:", error.message)
+    res.status(500).send("Something went wrong")
+  }
+}
+
 module.exports = {
   createAppointment,
   myAppointment,
   showAppointmentDetails,
-  updateAppointmentStatus
+  updateAppointmentStatus,
+  deleteAppointment,
+  updateAppointment
 }
