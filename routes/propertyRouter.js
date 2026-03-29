@@ -7,6 +7,8 @@ const { isLoggedIn, isOwner } = require("../middleware/index")
 
 const propertyController = require("../controllers/propertyController.js")
 
+router.get("/", propertyController.getAllProperties)
+router.get("/:id", propertyController.getPropertyById)
 router.post("/", propertyController.createProperty)
 router.put("/:id", propertyController.updatePropertyById)
 router.delete("/:id", propertyController.deletePropertyById)

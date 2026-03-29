@@ -14,6 +14,26 @@ const createProperty = async (req, res) => {
   }
 }
 
+const getAllProperties = async (req, res) => {
+  try {
+    const properties = await Property.find({})
+    res.send(properties)
+  } catch (error) {
+    console.error(
+      "⚠️ An error has occurred getting all properties!', error.message"
+    )
+  }
+}
+
+const getPropertyById = async (req, res) => {
+  try {
+    const property = await Property.findById(req.params.id)
+    res.send(property)
+  } catch (error) {
+    console.error("⚠️ An error has occurred getting a property!", error.message)
+  }
+}
+
 const updatePropertyById = async (req, res) => {
   try {
     const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
@@ -44,6 +64,8 @@ const deletePropertyById = async (req, res) => {
 
 module.exports = {
   createProperty,
+  getAllProperties,
+  getPropertyById,
   updatePropertyById,
   deletePropertyById,
 }
