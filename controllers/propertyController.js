@@ -1,3 +1,49 @@
+const { isOwner } = require("../middleware")
 const User = require("../models/User")
+const Property = require("../models/Property")
 
-module.exports = {}
+const createProperty = async (req, res) => {
+  try {
+    const property = await Property.create(req.body)
+    res.send(property)
+  } catch (error) {
+    console.error(
+      "⚠️ An error has occurred creating a property!",
+      error.message
+    )
+  }
+}
+
+const updatePropertyById = async (req, res) => {
+  try {
+    const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
+      returnDocument: "after",
+    })
+    res.send(property)
+  } catch (error) {
+    console.error(
+      "⚠️ An error has occurred updating a property!",
+      error.message
+    )
+  }
+}
+
+const deletePropertyById = async (req, res) => {
+  try {
+    await Property.findByIdAndDelete(req.params.id)
+    res.send(
+      `🗑️ Recipe with ID ${req.params.id} has been deleted successfully!`
+    )
+  } catch (error) {
+    console.error(
+      "⚠️ An error has occurred deleting a property!",
+      error.message
+    )
+  }
+}
+
+module.exports = {
+  createProperty,
+  updatePropertyById,
+  deletePropertyById,
+}
