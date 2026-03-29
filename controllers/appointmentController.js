@@ -24,6 +24,35 @@ const createAppointment = async (req, res) => {
   }
 }
 
+// Show all appointments for the logged-in user
+const myAppointment = async (req, res) => {
+  try {
+    let appointments
+
+    if (req.session.user.role === "client"){
+      appointments = await Appointment.find({ clientId: req.session.user._id}).populate("propertyId")
+    }
+  else {
+      const ownerProperties = await Property.find({
+        ownerId: req.session.user._id,
+      })
+      const propertyIds = ownerProperties.map((property) => property._id)
+
+      appointments = await Appointment.find({
+        propertyId: { $in: propertyIds },
+      })
+        .populate("propertyId")
+        .populate("clientId", "name email phoneNumber")
+    }
+
+    res.send(appointments)
+
+  } catch (error) {
+    console.error("Error showing appointments:", error.message)
+  }
+}
+
 module.exports = {
-  createAppointment
+  createAppointment,
+  myAppointment
 }
