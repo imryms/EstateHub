@@ -13,8 +13,9 @@ const PORT = process.env.PORT ? process.env.PORT : 3000
 const app = express()
 
 //Routes
-const authRouter = require('./routes/authRouter.js')
+const authRouter = require('./routes/authRouter')
 const userRouter = require('./routes/userRouter')
+const appointmentRouter = require('./routes/appointmentRouter')
 
 const dns = require('dns')
 dns.setServers(['8.8.8.8', '1.1.1.1'])
@@ -38,6 +39,7 @@ app.use(session({
 //Routes use
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
+app.use('/appointment', appointmentRouter)
 
 app.get('/', (req, res) => {
   res.send('🏢 EstateHub is open for Real Estate . . . ')
