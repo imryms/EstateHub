@@ -6,6 +6,10 @@ const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
 
+    if (req.params.id !== req.session.user._id.toString()) {
+      return res.status(403).send("Access denied")
+    }
+
     if (!user) {
       return res.status(404).send("User not found")
     }

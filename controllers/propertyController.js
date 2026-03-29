@@ -1,10 +1,11 @@
-const { isOwner } = require("../middleware")
-const User = require("../models/User")
 const Property = require("../models/Property")
 
 const createProperty = async (req, res) => {
   try {
-    const property = await Property.create(req.body)
+    const property = await Property.create({
+    ...req.body,
+    ownerId: req.session.user._id
+    })
     res.send(property)
   } catch (error) {
     console.error(
@@ -19,15 +20,14 @@ const getAllProperties = async (req, res) => {
     const properties = await Property.find({})
     res.send(properties)
   } catch (error) {
-    console.error(
-      "⚠️ An error has occurred getting all properties!', error.message"
-    )
+    console.error("⚠️ An error has occurred getting all properties!",error.message)
   }
 }
 
 const getPropertyById = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id)
+
     res.send(property)
   } catch (error) {
     console.error("⚠️ An error has occurred getting a property!", error.message)
