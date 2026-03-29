@@ -52,7 +52,7 @@ const deletePropertyById = async (req, res) => {
   try {
     await Property.findByIdAndDelete(req.params.id)
     res.send(
-      `🗑️ Recipe with ID ${req.params.id} has been deleted successfully!`
+      `🗑️ Property with ID ${req.params.id} has been deleted successfully!`
     )
   } catch (error) {
     console.error(
