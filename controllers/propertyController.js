@@ -3,13 +3,13 @@ const Property = require("../models/Property")
 const createProperty = async (req, res) => {
   try {
     const property = await Property.create({
-    ...req.body,
-    ownerId: req.session.user._id
+      ...req.body,
+      ownerId: req.session.user._id,
     })
     res.send(property)
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred creating a property!",
+      ":warning: An error has occurred creating a property!",
       error.message
     )
   }
@@ -20,7 +20,9 @@ const getAllProperties = async (req, res) => {
     const properties = await Property.find({})
     res.send(properties)
   } catch (error) {
-    console.error("⚠️ An error has occurred getting all properties!",error.message)
+    console.error(
+      ":warning: An error has occurred getting all properties!', error.message"
+    )
   }
 }
 
@@ -30,7 +32,10 @@ const getPropertyById = async (req, res) => {
 
     res.send(property)
   } catch (error) {
-    console.error("⚠️ An error has occurred getting a property!", error.message)
+    console.error(
+      ":warning: An error has occurred getting a property!",
+      error.message
+    )
   }
 }
 
@@ -42,7 +47,7 @@ const updatePropertyById = async (req, res) => {
     res.send(property)
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred updating a property!",
+      ":warning: An error has occurred updating a property!",
       error.message
     )
   }
@@ -56,7 +61,7 @@ const deletePropertyById = async (req, res) => {
     )
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred deleting a property!",
+      ":warning: An error has occurred deleting a property!",
       error.message
     )
   }
