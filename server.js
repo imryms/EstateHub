@@ -13,6 +13,8 @@ const path = require("path")
 const PORT = process.env.PORT ? process.env.PORT : 3000
 
 const app = express()
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, "views"))
 
 //Routes
 const authRouter = require("./routes/authRouter.js")
@@ -52,7 +54,9 @@ app.use("/user", userRouter)
 app.use("/property", propertyRouter)
 
 app.get("/", (req, res) => {
-  res.send("🏢 EstateHub is open for Real Estate . . . ")
+res.render("index", {
+    user: req.session.user
+  })
 })
 
 app.listen(PORT, () => {
