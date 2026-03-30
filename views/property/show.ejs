@@ -23,16 +23,32 @@
       <p><small>Listed on: <%= property.createdAt.toDateString() %></small></p>
     </div>
 
-    <% if (user && user._id === property.ownerId.toString()) { %>
-      <div class="actions" style="margin-top: 20px; display: flex; gap: 10px;">
-
-
-        <form action="/properties/<%= property._id %>?_method=DELETE" method="POST">
-          <button type="submit" style="color: red;">Delete Listing</button>
-        </form>
-
-      </div>
+    <% if (user && user.role === "client") { %>
+    <div class="book-now">
+    <a href="/appointments/<%= property._id %>/new" class="book-now-button">
+      Book Appointment
+    </a>
+    </div>
     <% } %>
+
+    <% if (user && user._id === property.ownerId.toString()) { %>
+    <div class="actions" style="margin-top: 20px; display: flex; gap: 10px;">
+
+    <a href="/properties/<%= property._id %>/edit">Edit Property</a>
+
+    <form action="/properties/<%= property._id %>?_method=PUT" method="POST">
+      <input type="hidden" name="status" value="<%= property.status === 'active' ? 'paused' : 'active' %>">
+      <button type="submit">
+        <%= property.status === 'active' ? 'Pause' : 'Activate' %>
+      </button>
+    </form>
+
+    <form action="/properties/<%= property._id %>?_method=DELETE" method="POST">
+      <button type="submit" style="color: red;">Delete Property</button>
+    </form>
+
+  </div>
+<% } %>
   </article>
 </div>
 

@@ -20,11 +20,13 @@
         <p>No properties yet.</p>
       <% } else { %>
         <% properties.forEach((property) => { %>
-          <div class="item-card">
-            <p><strong>Title:</strong> <%= property.title %></p>
-            <p><strong>Type:</strong> <%= property.type %></p>
-            <p><strong>Price:</strong> <%= property.price %></p>
-          </div>
+        <a href="/properties/<%= property._id %>" style="text-decoration: none; color: inherit;">
+                  <div class="item-card">
+                    <p><strong>Title:</strong> <%= property.title %></p>
+                    <p><strong>Type:</strong> <%= property.type %></p>
+                    <p><strong>Price:</strong> <%= property.price %></p>
+                  </div>
+                </a>
         <% }) %>
       <% } %>
     </div>

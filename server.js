@@ -18,6 +18,7 @@ app.set("views", path.join(__dirname, "views"))
 const authRouter = require("./routes/authRouter.js")
 const userRouter = require("./routes/userRouter.js")
 const propertyRouter = require("./routes/propertyRouter.js")
+const appointmentRouter = require("./routes/appointmentRouter.js")
 
 const dns = require("dns")
 dns.setServers(["8.8.8.8", "1.1.1.1"])
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 app.use("/auth", authRouter)
 app.use("/users", userRouter)
 app.use("/Properties", propertyRouter)
+app.use("/appointments", appointmentRouter)
 
 app.get("/", (req, res) => {
   res.render("index", {

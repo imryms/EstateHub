@@ -6,56 +6,54 @@ const createAppointment = async (req, res) => {
   try {
     const property = await Property.findById(req.params.propertyId)
 
-    if(!property){
-      return res.status(404).send("Property not found")
+    if (!property) {
+      return res.send("Property not found")
     }
 
-    const { startDateTime, endDateTime, note } = req.body
-
-    const appointment = await Appointment.create({
+    await Appointment.create({
       propertyId: req.params.propertyId,
       clientId: req.session.user._id,
-      startDateTime,
-      endDateTime,
-      note
+      startDateTime: req.body.startDateTime,
+      endDateTime: req.body.endDateTime,
+      note: req.body.note,
     })
 
-    res.send(appointment)
-
+    res.redirect("/appointments/myAppointments")
   } catch (error) {
     console.error("Error creating appointment:", error.message)
-    res.status(500).send("Something went wrong")
+    res.send("Error creating appointment")
   }
 }
 
 // Show all appointments for the logged-in user
 const myAppointment = async (req, res) => {
   try {
-    let appointments = []
+    let appointments
 
-    if (req.session.user.role === "client"){
-      appointments = await Appointment.find({ clientId: req.session.user._id}).populate("propertyId")
-    }
-
-    else if (req.session.user.role === "owner") {
-      const ownerProperties = await Property.find({
+    if (req.session.user.role === "client") {
+      appointments = await Appointment.find({
+        clientId: req.session.user._id,
+      }).populate("propertyId")
+    } else if (req.session.user.role === "owner") {
+      const properties = await Property.find({
         ownerId: req.session.user._id,
-      }).select("_id")
-      const propertyIds = ownerProperties.map((property) => property._id)
+      })
+
+      const propertyIds = properties.map((property) => property._id)
 
       appointments = await Appointment.find({
         propertyId: { $in: propertyIds },
       })
         .populate("propertyId")
-        .populate("clientId", "name email phoneNumber")
+        .populate("clientId")
     }
-    else {
-      return res.status(403).send("Access denied")
-    }
-    res.send(appointments)
+
+    res.render("appointments/index", {
+      appointments,
+      user: req.session.user,
+    })
   } catch (error) {
-    console.error("Error showing appointments:", error.message)
-    res.status(500).send("Something went wrong")
+    console.error("Error getting appointments:", error.message)
   }
 }
 
@@ -64,28 +62,31 @@ const showAppointmentDetails = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id)
       .populate("propertyId")
-      .populate("clientId", "name email phoneNumber")
+      .populate("clientId")
 
     if (!appointment) {
-      return res.status(404).send("Appointment not found")
+      return res.send("Appointment not found")
     }
 
-    const clientAppointment =
-      appointment.clientId._id.toString() === req.session.user._id.toString()
-
-    const ownerAppointment =
-      appointment.propertyId.ownerId.toString() ===
-      req.session.user._id.toString()
-
-    if (!clientAppointment && !ownerAppointment) {
-      return res.status(403).send("Access denied")
+    if (req.session.user.role === "client") {
+      if (appointment.clientId._id.toString() !== req.session.user._id.toString()) {
+        return res.send("Not allowed")
+      }
     }
 
-    res.send(appointment)
+    if (req.session.user.role === "owner") {
+      if (appointment.propertyId.ownerId.toString() !== req.session.user._id.toString()) {
+        return res.send("Not allowed")
+      }
+    }
 
+    res.render("appointments/show", {
+      appointment,
+      user: req.session.user,
+    })
   } catch (error) {
-    console.error("Error showing appointment:", error.message)
-    res.status(500).send("Something went wrong")
+    console.error("Error showing appointment details:", error.message)
+    res.send("Error loading appointment details")
   }
 }
 
@@ -121,58 +122,104 @@ const updateAppointmentStatus = async (req, res) => {
 
 const deleteAppointment = async (req, res) => {
   try {
-    const appointment = await Appointment.findById(req.params.id).populate("propertyId")
+    const appointment = await Appointment.findById(req.params.id)
 
     if (!appointment) {
-      return res.status(404).send("Appointment not found")
+      return res.send("Appointment not found")
     }
 
-    const isClient = appointment.clientId.toString() === req.session.user._id.toString()
-    const isOwner = appointment.propertyId.ownerId.toString() === req.session.user._id.toString()
-
-    if (!isClient && !isOwner) {
-      return res.status(403).send("Access denied")
+    if (req.session.user.role === "client") {
+      if (appointment.clientId.toString() !== req.session.user._id.toString()) {
+        return res.send("Not allowed")
+      }
     }
 
     await Appointment.findByIdAndDelete(req.params.id)
 
-    res.send("Appointment deleted successfully")
+    res.redirect("/appointments/myAppointments")
   } catch (error) {
     console.error("Error deleting appointment:", error.message)
-    res.status(500).send("Something went wrong")
+    res.send("Error deleting appointment")
   }
 }
 
 const updateAppointment = async (req, res) => {
   try {
-    const appointment = await Appointment.findById(req.params.id)
+    const appointment = await Appointment.findById(req.params.id).populate("propertyId")
 
     if (!appointment) {
-      return res.status(404).send("Appointment not found")
+      return res.send("Appointment not found")
+    }
+
+    if (req.session.user.role === "owner") {
+      if (appointment.propertyId.ownerId.toString() !== req.session.user._id.toString()) {
+        return res.send("Not allowed")
+      }
+
+      appointment.status = req.body.status
+      await appointment.save()
+
+      return res.redirect("/appointments/myAppointments")
+    }
+
+    if (req.session.user.role === "client") {
+      if (appointment.clientId.toString() !== req.session.user._id.toString()) {
+        return res.send("Not allowed")
+      }
+
+      appointment.startDateTime = req.body.startDateTime
+      appointment.endDateTime = req.body.endDateTime
+      appointment.note = req.body.note
+
+      await appointment.save()
+
+      return res.redirect("/appointments/myAppointments")
+    }
+
+    res.send("Something went wrong")
+  } catch (error) {
+    console.error("Error updating appointment:", error.message)
+    res.send("Error updating appointment")
+  }
+}
+
+const getNewAppointmentPage = async (req, res) => {
+  try {
+    const property = await Property.findById(req.params.propertyId)
+
+    if (!property) {
+      return res.send("Property not found")
+    }
+
+    res.render("appointments/new", {
+      property,
+      user: req.session.user,
+    })
+  } catch (error) {
+    console.error("Error loading new appointment page:", error.message)
+    res.send("Error loading page")
+  }
+}
+
+const getEditAppointmentPage = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id).populate("propertyId")
+
+    if (!appointment) {
+      return res.send("Appointment not found")
     }
 
     if (appointment.clientId.toString() !== req.session.user._id.toString()) {
-      return res.status(403).send("Access denied")
+      return res.send("Not allowed")
     }
 
-    if (appointment.status === "cancelled" || appointment.status === "completed") {
-      return res.status(400).send("Cannot edit a cancelled or completed appointment")
-    }
-
-    const { startDateTime, endDateTime, note } = req.body
-
-    appointment.startDateTime = startDateTime || appointment.startDateTime
-    appointment.endDateTime = endDateTime || appointment.endDateTime
-    appointment.note = note || appointment.note
-    appointment.status = "pending"
-
-
-    await appointment.save()
-
-    res.send(appointment)
+    res.render("appointments/edit", {
+      appointment,
+      user: req.session.user,
+    })
   } catch (error) {
-    console.error("Error updating appointment:", error.message)
-    res.status(500).send("Something went wrong")
+    console.error("Error loading edit appointment page:", error.message)
+    res.send("Error loading page")
   }
 }
 
@@ -182,5 +229,7 @@ module.exports = {
   showAppointmentDetails,
   updateAppointmentStatus,
   deleteAppointment,
-  updateAppointment
+  updateAppointment,
+  getNewAppointmentPage,
+  getEditAppointmentPage
 }

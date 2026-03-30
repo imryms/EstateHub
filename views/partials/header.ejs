@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -17,28 +16,26 @@
 
       <div class="nav-right">
         <% if (!user) { %>
-          <!-- Guest -->
           <a href="/">Home</a>
-          <a href="/properties">Browse</a>
+          <a href="/properties">Browse Properties</a>
           <a href="/auth/sign-up">Sign Up</a>
           <a href="/auth/log-in">Log In</a>
 
         <% } else if (user.role === "owner") { %>
-          <!-- Owner -->
           <a href="/">Home</a>
-          <a href="/properties">My Properties</a>
+          <a href="/properties">Browse Properties</a>
+          <a href="/properties/my/listings">My Properties</a>
           <a href="/properties/new">Add Property</a>
-          <a href="/appointments/myAppointments">Appointments</a>
+          <a href="/appointments/myAppointments">Manage Appointments</a>
           <a href="/users/profile">Profile</a>
-          <a href="/auth/sign-out">Logout</a>
+          <a href="/auth/sign-out">Log Out</a>
 
         <% } else if (user.role === "client") { %>
-          <!-- Client -->
           <a href="/">Home</a>
-          <a href="/properties">Browse</a>
+          <a href="/properties">Browse Properties</a>
           <a href="/appointments/myAppointments">My Appointments</a>
           <a href="/users/profile">Profile</a>
-          <a href="/auth/sign-out">Logout</a>
+          <a href="/auth/sign-out">Log Out</a>
         <% } %>
       </div>
     </nav>
