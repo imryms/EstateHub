@@ -1,0 +1,22 @@
+<%- include('../partials/header.ejs') %>
+
+<h2>Sign Up</h2>
+<form action="/auth/sign-up" method="POST">
+  <input type="text" name="name" placeholder="Name" required />
+  <input type="email" name="email" placeholder="Email" required />
+  <input type="tel" name="number" placeholder="Phone Number" required />
+  <input type="password" name="password" placeholder="Password" required />
+  <input
+    type="password"
+    name="confirmPassword"
+    placeholder="Confirm Password"
+    required
+  />
+  <label>Role</label> 
+  <input type="radio" name="role" value="client" checked /> Client  
+  <input type="radio" name="role" value="owner" /> Owner
+
+  <button type="submit">sign-up</button>
+</form>
+
+<%- include('../partials/footer.ejs') %>

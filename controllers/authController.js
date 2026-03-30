@@ -1,14 +1,14 @@
-const bcrypt = require('bcrypt')
+const bcrypt = require("bcrypt")
 
-const User = require('../models/User.js')
+const User = require("../models/User.js")
 
 const registerUser = async (req, res) => {
   try {
     const userInDatabase = await User.exists({ email: req.body.email })
 
     if (userInDatabase) {
-    return res.status(400).send('Email already registered!')
-   }
+      return res.status(400).send("Email already registered!")
+    }
 
     if (req.body.password !== req.body.confirmPassword) {
       return res.status(400).send("Passwords must match")
@@ -25,11 +25,11 @@ const registerUser = async (req, res) => {
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       password: hashedPassword,
-      role: req.body.role
+      role: req.body.role,
     })
     res.send(`Thanks for signing up!`)
   } catch (error) {
-    console.error('An error has occurred registering a user!', error.message)
+    console.error("An error has occurred registering a user!", error.message)
   }
 }
 
@@ -39,31 +39,28 @@ const logInUser = async (req, res) => {
 
     if (!user) {
       return res.send(
-        'No user has been registered with that email. Please sign up!'
+        "No user has been registered with that email. Please sign up!"
       )
     }
 
-    const validPassword = await bcrypt.compare(
-      req.body.password,
-      user.password
-    )
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
 
     if (!validPassword) {
-      return res.send('Incorrect password! Please try again.')
+      return res.send("Incorrect password! Please try again.")
     }
 
     req.session.user = {
       email: user.email,
       _id: user._id,
-      role: user.role
+      role: user.role,
     }
 
     req.session.save(() => {
-      res.send(`Thanks for signing in, ${user.name}!`)
+      // res.r(`Thanks for signing in, ${user.name}!`)
+      res.redirect("/")
     })
-
   } catch (error) {
-    console.error('An error has occurred signing in a user!', error.message)
+    console.error("An error has occurred signing in a user!", error.message)
   }
 }
 
@@ -73,8 +70,9 @@ const signOutUser = (req, res) => {
       res.redirect("/")
     })
   } catch (err) {
-    console.error(err);
-    res.status(500).send("Something went wrong");  }
+    console.error(err)
+    res.status(500).send("Something went wrong")
+  }
 }
 
 const changePassword = async (req, res) => {
@@ -111,9 +109,8 @@ const changePassword = async (req, res) => {
     await user.save()
 
     res.send("Password updated successfully")
-
   } catch (err) {
-    console.error(err);
+    console.error(err)
     res.status(500).send("Something went wrong")
   }
 }
@@ -122,5 +119,5 @@ module.exports = {
   registerUser,
   logInUser,
   signOutUser,
-  changePassword
+  changePassword,
 }
