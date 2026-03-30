@@ -48,13 +48,8 @@ app.use((req, res, next) => {
 
 //Routes use
 app.use("/auth", authRouter)
-<<<<<<< zainab
-app.use("/user", userRouter)
-app.use("/properties", propertyRouter)
-=======
 app.use("/users", userRouter)
 app.use("/Properties", propertyRouter)
->>>>>>> main
 
 app.get("/", (req, res) => {
   res.render("index", {
