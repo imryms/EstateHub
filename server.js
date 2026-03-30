@@ -8,6 +8,8 @@ const { MongoStore } = require("connect-mongo")
 
 const path = require("path")
 
+// const middleware = require("./middleware")
+
 const PORT = process.env.PORT ? process.env.PORT : 3000
 
 const app = express()
@@ -37,6 +39,12 @@ app.use(
     }),
   })
 )
+
+//Middleware use//
+// app.use(middleware.isLoggedIn)
+// app.use(middleware.isClient)
+// app.use(middleware.isOwner)
+// app.use(middleware.isPropertyOwner)
 
 //Routes use
 app.use("/auth", authRouter)
