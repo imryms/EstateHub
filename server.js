@@ -55,7 +55,7 @@ app.use((req, res, next) => {
 
 //Routes use
 app.use("/auth", authRouter)
-app.use("/user", userRouter)
+app.use("/users", userRouter)
 app.use("/property", propertyRouter)
 
 app.get("/", (req, res) => {

@@ -1,0 +1,54 @@
+<%- include("../partials/header") %>
+
+<div class="profile-page">
+  <div class="profile-card">
+    <h1>My Profile</h1>
+
+    <p><strong>Name:</strong> <%= user.name %></p>
+    <p><strong>Email:</strong> <%= user.email %></p>
+    <p><strong>Phone Number:</strong> <%= user.phoneNumber %></p>
+    <p><strong>Role:</strong> <%= user.role %></p>
+    <a href="/auth/change-password">Change Password</a>
+
+  </div>
+
+  <% if (user.role === "owner") { %>
+    <div class="profile-section">
+      <h2>My Properties</h2>
+
+      <% if (properties.length === 0) { %>
+        <p>No properties yet.</p>
+      <% } else { %>
+        <% properties.forEach((property) => { %>
+          <div class="item-card">
+            <p><strong>Title:</strong> <%= property.title %></p>
+            <p><strong>Type:</strong> <%= property.type %></p>
+            <p><strong>Price:</strong> <%= property.price %></p>
+          </div>
+        <% }) %>
+      <% } %>
+    </div>
+  <% } %>
+
+  <div class="profile-section">
+    <h2>My Appointments</h2>
+
+    <% if (appointments.length === 0) { %>
+      <p>No appointments yet.</p>
+    <% } else { %>
+      <% appointments.forEach((appointment) => { %>
+        <div class="item-card">
+          <p><strong>Property:</strong> <%= appointment.propertyId?.title || "No property" %></p>
+
+          <% if (user.role === "owner") { %>
+            <p><strong>Client:</strong> <%= appointment.clientId?.name || "No client" %></p>
+          <% } %>
+
+          <p><strong>Status:</strong> <%= appointment.status %></p>
+          <p><strong>Date:</strong> <%= new Date(appointment.startDateTime).toLocaleString() %></p>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+</div>
+<%- include("../partials/footer") %>

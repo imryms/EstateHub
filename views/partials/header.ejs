@@ -29,7 +29,7 @@
           <a href="/properties">My Properties</a>
           <a href="/properties/new">Add Property</a>
           <a href="/appointments/myAppointments">Appointments</a>
-          <a href="/users/<%= user._id %>">Profile</a>
+          <a href="/users/profile">Profile</a>
           <a href="/auth/sign-out">Logout</a>
 
         <% } else if (user.role === "client") { %>
@@ -37,7 +37,7 @@
           <a href="/">Home</a>
           <a href="/properties">Browse</a>
           <a href="/appointments/myAppointments">My Appointments</a>
-          <a href="/users/<%= user._id %>">Profile</a>
+          <a href="/users/profile">Profile</a>
           <a href="/auth/sign-out">Logout</a>
         <% } %>
       </div>
