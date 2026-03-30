@@ -62,7 +62,7 @@ const logInUser = async (req, res) => {
       res.send(`Thanks for signing in, ${user.name}!`)
     })
 
-  } catch (err) {
+  } catch (error) {
     console.error('An error has occurred signing in a user!', error.message)
   }
 }

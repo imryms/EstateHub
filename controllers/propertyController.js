@@ -1,10 +1,11 @@
-const { isOwner } = require("../middleware")
-const User = require("../models/User")
 const Property = require("../models/Property")
 
 const createProperty = async (req, res) => {
   try {
-    const property = await Property.create(req.body)
+    const property = await Property.create({
+      ...req.body,
+      ownerId: req.session.user._id,
+    })
     res.send(property)
   } catch (error) {
     console.error(
@@ -28,6 +29,7 @@ const getAllProperties = async (req, res) => {
 const getPropertyById = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id)
+
     res.send(property)
   } catch (error) {
     console.error(
@@ -55,7 +57,7 @@ const deletePropertyById = async (req, res) => {
   try {
     await Property.findByIdAndDelete(req.params.id)
     res.send(
-      `:wastebasket: Recipe with ID ${req.params.id} has been deleted successfully!`
+      `🗑️ Property with ID ${req.params.id} has been deleted successfully!`
     )
   } catch (error) {
     console.error(
