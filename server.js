@@ -56,11 +56,11 @@ app.use((req, res, next) => {
 //Routes use
 app.use("/auth", authRouter)
 app.use("/user", userRouter)
-app.use("/property", propertyRouter)
+app.use("/properties", propertyRouter)
 
 app.get("/", (req, res) => {
-res.render("index", {
-    user: req.session.user
+  res.render("index", {
+    user: req.session.user,
   })
 })
 

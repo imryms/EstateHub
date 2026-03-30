@@ -14,13 +14,10 @@ const createProperty = async (req, res) => {
     )
   }
 }
-
 const getAllProperties = async (req, res) => {
   try {
     const properties = await Property.find({})
-    // res.render("property/all", { properties })
-    res.send(properties)
-    console.log(properties)
+    res.render("property/all", { properties })
   } catch (error) {
     console.error(
       ":warning: An error has occurred getting all properties!', error.message"
@@ -32,7 +29,7 @@ const getPropertyById = async (req, res) => {
   try {
     const property = await Property.findById(req.params.id)
 
-    res.send(property)
+    res.render("property/show", { property })
   } catch (error) {
     console.error(
       ":warning: An error has occurred getting a property!",
@@ -46,7 +43,8 @@ const updatePropertyById = async (req, res) => {
     const property = await Property.findByIdAndUpdate(req.params.id, req.body, {
       returnDocument: "after",
     })
-    res.send(property)
+    res.redirect(`/properties/${req.params.id}`)
+    console.log(properties)
   } catch (error) {
     console.error(
       ":warning: An error has occurred updating a property!",

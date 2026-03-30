@@ -26,9 +26,6 @@
     <% if (user && user._id === property.ownerId.toString()) { %>
       <div class="actions" style="margin-top: 20px; display: flex; gap: 10px;">
 
-        <a href="/properties/<%= property._id %>/edit">
-          <button type="button">Edit Listing</button>
-        </a>
 
         <form action="/properties/<%= property._id %>?_method=DELETE" method="POST">
           <button type="submit" style="color: red;">Delete Listing</button>
