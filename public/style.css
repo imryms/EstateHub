@@ -1,0 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: #fdf7ef;
+  color: #2a1212;
+}
+
+/* ── Navbar ── */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2.5rem;
+  background: #2a1212;
+  border-bottom: 2px solid #e2cfb5;
+}
+
+.logo {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #dbbf9b;
+  text-decoration: none;
+}
+
+.nav-right {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.nav-right a {
+  color: #dbbf9b;
+  text-decoration: none;
+  font-size: 0.85rem;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.nav-right a:hover {
+  opacity: 1;
+}
+
+/* ── Footer ── */
+.footer {
+  background: #2a1212;
+  text-align: center;
+  padding: 20px;
+  margin-top: 40px;
+  font-size: 14px;
+  border-top: 1px solid rgba(196, 122, 58, 0.25);
+}
+
+.footer p {
+  font-size: 0.75rem;
+  color: #e2cfb5;
+}
+

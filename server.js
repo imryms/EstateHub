@@ -48,6 +48,11 @@ app.use(
 // app.use(middleware.isOwner)
 // app.use(middleware.isPropertyOwner)
 
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null
+  next()
+})
+
 //Routes use
 app.use("/auth", authRouter)
 app.use("/user", userRouter)

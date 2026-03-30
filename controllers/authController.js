@@ -20,16 +20,26 @@ const registerUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(req.body.password, 12)
 
-    await User.create({
+    const newUser = await User.create({
       name: req.body.name,
       email: req.body.email,
       phoneNumber: req.body.phoneNumber,
       password: hashedPassword,
       role: req.body.role,
     })
-    res.send(`Thanks for signing up!`)
+
+    req.session.user = {
+      email: newUser.email,
+      _id: newUser._id,
+      role: newUser.role,
+    }
+
+    req.session.save(() => {
+      res.redirect("/")
+    })
   } catch (error) {
     console.error("An error has occurred registering a user!", error.message)
+    res.status(500).send("Something went wrong")
   }
 }
 
@@ -50,13 +60,13 @@ const logInUser = async (req, res) => {
     }
 
     req.session.user = {
+      name: user.name,
       email: user.email,
       _id: user._id,
       role: user.role,
     }
 
     req.session.save(() => {
-      // res.r(`Thanks for signing in, ${user.name}!`)
       res.redirect("/")
     })
   } catch (error) {
