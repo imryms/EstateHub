@@ -6,23 +6,39 @@
     <title>EstateHub</title>
     <link rel="stylesheet" href="/style.css" />
   </head>
+
   <body>
-    <nav>
-      <a href="/">Home</a>
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="/" class="logo">EstateHub</a>
+      </div>
 
-      <% if (!user) { %>
+      <div class="nav-right">
+        <% if (!user) { %>
+          <!-- Guest -->
+          <a href="/">Home</a>
+          <a href="/properties">Browse</a>
+          <a href="/auth/sign-up">Sign Up</a>
+          <a href="/auth/sign-in">Sign In</a>
 
-      <a href="/auth/sign-up">Sign Up</a>
-      <a href="/auth/sign-in">Sign In</a>
+        <% } else if (user.role === "owner") { %>
+          <!-- Owner -->
+          <a href="/">Home</a>
+          <a href="/properties">My Properties</a>
+          <a href="/properties/new">Add Property</a>
+          <a href="/appointments/myAppointments">Appointments</a>
+          <a href="/users/<%= user._id %>">Profile</a>
+          <a href="/auth/sign-out">Logout</a>
 
-      <% } else { %>
-
-      <a href="/properties">All Properties</a>
-      <a href="/properties/new">New Property</a>
-      <a href="/users/<%= user._id %>">My Profile</a>
-      <a href="/auth/sign-out">Sign Out</a>
-
-      <% } %>
-
+        <% } else if (user.role === "client") { %>
+          <!-- Client -->
+          <a href="/">Home</a>
+          <a href="/properties">Browse</a>
+          <a href="/appointments/myAppointments">My Appointments</a>
+          <a href="/users/<%= user._id %>">Profile</a>
+          <a href="/auth/sign-out">Logout</a>
+        <% } %>
+      </div>
     </nav>
+
     <main>
