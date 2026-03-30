@@ -8,8 +8,6 @@ const { MongoStore } = require("connect-mongo")
 
 const path = require("path")
 
-// const middleware = require("./middleware")
-
 const PORT = process.env.PORT ? process.env.PORT : 3000
 
 const app = express()
@@ -42,11 +40,6 @@ app.use(
   })
 )
 
-//Middleware use//
-// app.use(middleware.isLoggedIn)
-// app.use(middleware.isClient)
-// app.use(middleware.isOwner)
-// app.use(middleware.isPropertyOwner)
 
 app.use((req, res, next) => {
   res.locals.user = req.session.user || null
@@ -55,8 +48,13 @@ app.use((req, res, next) => {
 
 //Routes use
 app.use("/auth", authRouter)
+<<<<<<< zainab
 app.use("/user", userRouter)
 app.use("/properties", propertyRouter)
+=======
+app.use("/users", userRouter)
+app.use("/Properties", propertyRouter)
+>>>>>>> main
 
 app.get("/", (req, res) => {
   res.render("index", {
