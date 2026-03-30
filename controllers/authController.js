@@ -118,7 +118,8 @@ const changePassword = async (req, res) => {
 
     await user.save()
 
-    res.send("Password updated successfully")
+    // res.send("Password updated successfully")
+    res.render("./auth/confirm.ejs")
   } catch (err) {
     console.error(err)
     res.status(500).send("Something went wrong")
