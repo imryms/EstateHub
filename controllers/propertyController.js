@@ -8,7 +8,7 @@ const createProperty = async (req, res) => {
     res.send(property)
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred creating a property!",
+      ":warning: An error has occurred creating a property!",
       error.message
     )
   }
@@ -20,7 +20,7 @@ const getAllProperties = async (req, res) => {
     res.send(properties)
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred getting all properties!', error.message"
+      ":warning: An error has occurred getting all properties!', error.message"
     )
   }
 }
@@ -30,7 +30,10 @@ const getPropertyById = async (req, res) => {
     const property = await Property.findById(req.params.id)
     res.send(property)
   } catch (error) {
-    console.error("⚠️ An error has occurred getting a property!", error.message)
+    console.error(
+      ":warning: An error has occurred getting a property!",
+      error.message
+    )
   }
 }
 
@@ -42,7 +45,7 @@ const updatePropertyById = async (req, res) => {
     res.send(property)
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred updating a property!",
+      ":warning: An error has occurred updating a property!",
       error.message
     )
   }
@@ -52,11 +55,11 @@ const deletePropertyById = async (req, res) => {
   try {
     await Property.findByIdAndDelete(req.params.id)
     res.send(
-      `🗑️ Recipe with ID ${req.params.id} has been deleted successfully!`
+      `:wastebasket: Recipe with ID ${req.params.id} has been deleted successfully!`
     )
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred deleting a property!",
+      ":warning: An error has occurred deleting a property!",
       error.message
     )
   }
