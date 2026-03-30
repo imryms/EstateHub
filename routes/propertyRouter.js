@@ -3,17 +3,22 @@ const router = express.Router()
 
 const propertyController = require("../controllers/propertyController.js")
 
+const { isLoggedIn, isOwner, isPropertyOwner } = require("../middleware")
+
 router.get("/", propertyController.getAllProperties)
 
-router.get("/new", (req, res) => {
+router.get("/new", isLoggedIn, isOwner, (req, res) => {
   res.render("property/new")
 })
 
-router.get("/:id/edit", propertyController.getEditPage)
+router.post("/", isLoggedIn, isOwner, propertyController.createProperty)
+
+router.get("/:id/edit", isLoggedIn, isOwner, isPropertyOwner, propertyController.getEditPage)
+
 router.get("/:id", propertyController.getPropertyById)
 
-router.post("/", propertyController.createProperty)
-router.put("/:id", propertyController.updatePropertyById)
-router.delete("/:id", propertyController.deletePropertyById)
+router.put("/:id", isLoggedIn, isOwner, isPropertyOwner, propertyController.updatePropertyById)
+
+router.delete("/:id", isLoggedIn, isOwner, isPropertyOwner, propertyController.deletePropertyById)
 
 module.exports = router
