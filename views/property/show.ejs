@@ -1,0 +1,42 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="container">
+  <a href="/properties"> Back to Listings</a>
+
+  <article class="property-details">
+    <h2><%= property.title %></h2>
+
+    <p>Status: <strong><%= property.status.toUpperCase() %></strong></p>
+
+    <% if (property.images && property.images.length > 0) { %>
+      <div class="image-gallery">
+        <img src="<%= property.images[0] %>" alt="<%= property.title %>" style="max-width: 100%; border-radius: 8px;" />
+      </div>
+    <% } %>
+
+    <div class="info">
+      <h3>$<%= property.price.toLocaleString() %> — For <%= property.purpose %></h3>
+      <p><strong>Type:</strong> <%= property.type %></p>
+      <p><strong>Location:</strong> <%= property.address %></p>
+      <hr />
+      <p><%= property.description %></p>
+      <p><small>Listed on: <%= property.createdAt.toDateString() %></small></p>
+    </div>
+
+    <% if (user && user._id === property.ownerId.toString()) { %>
+      <div class="actions" style="margin-top: 20px; display: flex; gap: 10px;">
+
+        <a href="/properties/<%= property._id %>/edit">
+          <button type="button">Edit Listing</button>
+        </a>
+
+        <form action="/properties/<%= property._id %>?_method=DELETE" method="POST">
+          <button type="submit" style="color: red;">Delete Listing</button>
+        </form>
+
+      </div>
+    <% } %>
+  </article>
+</div>
+
+<%- include('../partials/footer.ejs') %>

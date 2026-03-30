@@ -1,0 +1,12 @@
+<%- include('../partials/header.ejs') %>
+
+<h2>All Properties</h2>
+<ul>
+  <% properties.forEach(property => { %>
+<li>
+  <a href="/properties/<%= property._id %>"><%= property.title %></a>
+</li>
+<% }) %>
+</ul>
+
+<%- include('../partials/footer.ejs') %>

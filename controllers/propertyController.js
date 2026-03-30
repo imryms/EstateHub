@@ -18,7 +18,9 @@ const createProperty = async (req, res) => {
 const getAllProperties = async (req, res) => {
   try {
     const properties = await Property.find({})
+    // res.render("property/all", { properties })
     res.send(properties)
+    console.log(properties)
   } catch (error) {
     console.error(
       ":warning: An error has occurred getting all properties!', error.message"
