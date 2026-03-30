@@ -1,6 +1,58 @@
-<%- include('./partials/header.ejs') %>
+<%- include("./partials/header") %>
 
-<h1>Welcome to EstateHub!</h1>
-<p>Sign in or sign up to get started.</p>
+<section class="hero">
+  <div class="hero-badge">Real Estate Platform</div>
+  <h1>Find Your <span>Dream</span> Property</h1>
+  <p>EstateHub helps you explore properties for sale or rent in a simple and easy way.</p>
 
-<%- include('./partials/footer.ejs') %>
+  <div class="hero-buttons">
+    <% if (!user) { %>
+      <a href="/auth/sign-in" class="cta-secondary">Sign In</a>
+      <a href="/auth/sign-up" class="cta-primary">Sign Up</a>
+    <% } else { %>
+      <a href="/properties" class="cta-primary">Browse Properties</a>
+    <% } %>
+  </div>
+</section>
+
+
+<section class="categories">
+  <p class="section-label">Explore</p>
+  <h2 class="section-title">Browse by Property Type</h2>
+  <p class="section-sub">Choose the type of property you want to explore</p>
+
+  <div class="categories-grid">
+    <div class="category-card">
+      <div class="card-icon">🏠</div>
+      <h3>House</h3>
+      <p>Comfortable homes for families</p>
+    </div>
+    <div class="category-card">
+      <div class="card-icon">🏢</div>
+      <h3>Apartment</h3>
+      <p>Modern apartments in great locations</p>
+    </div>
+    <div class="category-card">
+      <div class="card-icon">🏛️</div>
+      <h3>Villa</h3>
+      <p>Luxury villas with spacious areas</p>
+    </div>
+    <div class="category-card">
+      <div class="card-icon">🏬</div>
+      <h3>Building</h3>
+      <p>Buildings for investment and business</p>
+    </div>
+    <div class="category-card">
+      <div class="card-icon">🛋️</div>
+      <h3>Studio</h3>
+      <p>Small and practical spaces for singles</p>
+    </div>
+    <div class="category-card">
+      <div class="card-icon">🏕️</div>
+      <h3>Land</h3>
+      <p>Land for future projects and development</p>
+    </div>
+  </div>
+</section>
+
+<%- include("./partials/footer") %>
