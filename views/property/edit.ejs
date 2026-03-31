@@ -18,7 +18,7 @@
     <div>
       <label for="type">Property Type:</label>
       <select name="type" id="type" required>
-        <% const types = ['Apartment', 'House', 'Studio', 'Villa'] %>
+        <% const types = ['Apartment', 'House', 'Studio', 'Villa' , 'Land' , 'Building'] %>
         <% types.forEach(t => { %>
           <option value="<%= t %>" <%= property.type === t ? 'selected' : '' %>><%= t %></option>
         <% }) %>
