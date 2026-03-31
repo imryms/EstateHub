@@ -11,9 +11,10 @@ const createProperty = async (req, res) => {
     res.redirect(`/properties/${property._id}`)
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred creating a property!",
+      ":warning: An error has occurred creating a property!",
       error.message
     )
+    // res.redirect("properties/new")
   }
 }
 
@@ -22,7 +23,10 @@ const getAllProperties = async (req, res) => {
     const properties = await Property.find({ status: "active" })
     res.render("property/all", { properties })
   } catch (error) {
-    console.error("⚠️ An error has occurred getting all properties!", error.message)
+    console.error(
+      ":warning: An error has occurred getting all properties!",
+      error.message
+    )
   }
 }
 
@@ -34,7 +38,10 @@ const getMyProperties = async (req, res) => {
 
     res.render("property/all", { properties })
   } catch (error) {
-    console.error("⚠️ An error has occurred getting my properties!", error.message)
+    console.error(
+      ":warning: An error has occurred getting my properties!",
+      error.message
+    )
   }
 }
 
@@ -53,17 +60,24 @@ const getPropertyById = async (req, res) => {
 
 const updatePropertyById = async (req, res) => {
   try {
-    const property = await Property.findByIdAndUpdate(
-      req.params.id,
-      {
-        ...req.body,
-        images: req.body.images ? [req.body.images] : [],
-      },
-      {returnDocument: "after"}
-    )
+    const updatedData = {
+      ...req.body,
+    }
+
+    if (req.body.images) {
+      updatedData.images = [req.body.images]
+    }
+
+    await Property.findByIdAndUpdate(req.params.id, updatedData, {
+      returnDocument: "after",
+    })
+
     res.redirect(`/properties/${req.params.id}`)
   } catch (error) {
-    console.error( "⚠️ An error has occurred updating a property!",error.message )
+    console.error(
+      ":warning: An error has occurred updating a property!",
+      error.message
+    )
   }
 }
 
@@ -73,7 +87,7 @@ const deletePropertyById = async (req, res) => {
     res.redirect("/properties")
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred deleting a property!",
+      ":warning: An error has occurred deleting a property!",
       error.message
     )
   }
@@ -86,7 +100,7 @@ const getEditPage = async (req, res) => {
     res.render("property/edit", { property })
   } catch (error) {
     console.error(
-      "⚠️ An error has occurred getting edit page!",
+      ":warning: An error has occurred getting edit page!",
       error.message
     )
     res.status(500).send("Something went wrong")
@@ -112,5 +126,5 @@ module.exports = {
   updatePropertyById,
   deletePropertyById,
   getEditPage,
-  getPropertiesByType
+  getPropertiesByType,
 }
