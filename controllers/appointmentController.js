@@ -25,7 +25,6 @@ const createAppointment = async (req, res) => {
   }
 }
 
-// Show all appointments for the logged-in user
 const myAppointment = async (req, res) => {
   try {
     let appointments
@@ -57,7 +56,6 @@ const myAppointment = async (req, res) => {
   }
 }
 
-// Show single appointment
 const showAppointmentDetails = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id)
