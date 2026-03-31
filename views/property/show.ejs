@@ -1,26 +1,26 @@
 <%- include('../partials/header.ejs') %>
 
-<div class="container">
-  <a href="/properties"> Back to Listings</a>
+<div class="property-container">
+  <a href="/properties" class="cta-secondary"> Back to Listings</a>
 
-  <article class="property-details">
-    <h2><%= property.title %></h2>
+  <article class="profile-card" style="margin-top: 20px;">
+    <span class="hero-badge"><%= property.status %></span>
+    <h1><%= property.title %></h1>
 
     <p>Status: <strong><%= property.status.toUpperCase() %></strong></p>
 
-    <% if (property.images && property.images.length > 0) { %>
-      <div class="image-gallery">
-        <img src="<%= property.images[0] %>" alt="<%= property.title %>" style="max-width: 100%; border-radius: 8px;" />
-      </div>
+    <% if (property.images.length > 0) { %>
+        <img src="<%= property.images[0] %>" class="property-hero-img">
     <% } %>
 
-    <div class="info">
-      <h3>$<%= property.price.toLocaleString() %> — For <%= property.purpose %></h3>
+    <div class="meta-info">
+      <p><strong>Price:</strong> $<%= property.price.toLocaleString() %></p>
       <p><strong>Type:</strong> <%= property.type %></p>
       <p><strong>Location:</strong> <%= property.address %></p>
+    </div>
       <hr />
-      <p><%= property.description %></p>
-      <p><small>Listed on: <%= property.createdAt.toDateString() %></small></p>
+<p style="font-size: 1.1rem; line-height: 1.6;"><%= property.description %></p>
+<p><small>Listed on: <%= property.createdAt.toDateString() %></small></p>
     </div>
 
     <% if (user && user.role === "client") { %>
@@ -32,8 +32,7 @@
     <% } %>
 
     <% if (user && user._id === property.ownerId.toString()) { %>
-    <div class="actions" style="margin-top: 20px; display: flex; gap: 10px;">
-
+    <a href="/properties/<%= property._id %>/edit" class="cta-secondary">Edit</a>
     <a href="/properties/<%= property._id %>/edit">Edit Property</a>
 
     <form action="/properties/<%= property._id %>?_method=PUT" method="POST">
