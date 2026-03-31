@@ -6,23 +6,23 @@
   <div class="appointment-box">
     <p class="appointment-line">
       <span class="label-text">Property:</span>
-      <span class="value-text"><%= appointment.propertyId?.title || "No title" %></span>
+      <span class="value-text"><%= appointment.propertyId.title %></span>
     </p>
 
     <% if (user.role === "owner") { %>
       <p class="appointment-line">
         <span class="label-text">Client Name:</span>
-        <span class="value-text"><%= appointment.clientId?.name || "No client name" %></span>
+        <span class="value-text"><%= appointment.clientId.name %></span>
       </p>
 
       <p class="appointment-line">
         <span class="label-text">Client Email:</span>
-        <span class="value-text"><%= appointment.clientId?.email || "No client email" %></span>
+        <span class="value-text"><%= appointment.clientId.email %></span>
       </p>
 
       <p class="appointment-line">
         <span class="label-text">Client Phone:</span>
-        <span class="value-text"><%= appointment.clientId?.phoneNumber || "No client phone" %></span>
+        <span class="value-text"><%= appointment.clientId.phoneNumber %></span>
       </p>
     <% } %>
 
@@ -43,18 +43,18 @@
 
     <p class="appointment-line note-line">
       <span class="label-text">Note:</span>
-      <span class="value-text"><%= appointment.note || "—" %></span>
+      <span class="value-text"><%= appointment.note %></span>
     </p>
 
     <% if (user.role === "owner" && appointment.status === "pending") { %>
       <div class="owner-buttons">
         <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="small-form">
-          <input type="hidden" name="status" value="confirmed" />
+          <input type="hidden" name="status" value="confirmed">
           <button type="submit" class="yes-btn">Confirm</button>
         </form>
 
         <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="small-form">
-          <input type="hidden" name="status" value="cancelled" />
+          <input type="hidden" name="status" value="cancelled">
           <button type="submit" class="no-button">Cancel</button>
         </form>
       </div>
