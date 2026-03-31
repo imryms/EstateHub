@@ -7,6 +7,7 @@ const { isLoggedIn, isOwner, isPropertyOwner } = require("../middleware")
 
 router.get("/", propertyController.getAllProperties)
 router.get("/my/listings", isLoggedIn, isOwner, propertyController.getMyProperties)
+router.get("/type/:type", propertyController.getPropertiesByType)
 
 router.get("/new", isLoggedIn, isOwner, (req, res) => {
   res.render("property/new")

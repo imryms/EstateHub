@@ -93,6 +93,17 @@ const getEditPage = async (req, res) => {
   }
 }
 
+const getPropertiesByType = async (req, res) => {
+  try {
+    const properties = await Property.find({ type: req.params.type })
+
+    res.render("property/all", { properties })
+  } catch (error) {
+    console.error("Error filtering properties:", error.message)
+    res.status(500).send("Something went wrong")
+  }
+}
+
 module.exports = {
   createProperty,
   getAllProperties,
@@ -100,5 +111,6 @@ module.exports = {
   getPropertyById,
   updatePropertyById,
   deletePropertyById,
-  getEditPage
+  getEditPage,
+  getPropertiesByType
 }
