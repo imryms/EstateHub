@@ -1,0 +1,180 @@
+/* Sign Up Page */
+.signup-page {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.signup-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: #2a1212;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #e2cfb5;
+  display: inline-block;
+}
+
+.signup-box {
+  background-color: #fff;
+  border: 1px solid rgba(107, 58, 31, 0.12);
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.signup-input {
+  border: 1px solid rgba(196, 122, 58, 0.25);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.signup-input:focus {
+  border-color: #e2cfb5;
+}
+
+.role-group {
+  font-size: 0.9rem;
+  color: #752e2e;
+}
+
+.role-group label {
+  margin-right: 10px;
+}
+
+.signup-submit {
+  background: #e2cfb5;
+  color: #2a1212;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.signup-submit:hover {
+  background: #dbbf9b;
+}
+
+/* Login Page */
+.login-page {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.login-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: #2a1212;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #e2cfb5;
+  display: inline-block;
+}
+
+.login-box {
+  background-color: #fff;
+  border: 1px solid rgba(107, 58, 31, 0.12);
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.login-input {
+  border: 1px solid rgba(196, 122, 58, 0.25);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.login-input:focus {
+  border-color: #e2cfb5;
+}
+
+.login-button {
+  background: #e2cfb5;
+  color: #2a1212;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login-button:hover {
+  background: #dbbf9b;
+}
+
+
+/* Change Password Page */
+.change-password-page {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.change-password-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: #2a1212;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #e2cfb5;
+  display: inline-block;
+}
+
+.change-password-box {
+  background-color: #fff;
+  border: 1px solid rgba(107, 58, 31, 0.12);
+  border-radius: 16px;
+  padding: 25px;
+}
+
+.change-password-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.change-password-input {
+  border: 1px solid rgba(196, 122, 58, 0.25);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.change-password-input:focus {
+  border-color: #e2cfb5;
+}
+
+.change-password-button {
+  background: #e2cfb5;
+  color: #2a1212;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.change-password-button:hover {
+  background: #dbbf9b;
+}

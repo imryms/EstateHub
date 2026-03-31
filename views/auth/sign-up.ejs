@@ -1,23 +1,31 @@
 <%- include('../partials/header.ejs') %>
 
-<h2>Sign Up</h2>
+<main class="signup-page">
+  <h2 class="signup-title">Sign Up</h2>
 
-<form action="/auth/sign-up" method="POST">
-  <input type="text" name="name" placeholder="Name" required />
+  <div class="signup-box">
+    <form action="/auth/sign-up" method="POST" class="signup-form">
 
-  <input type="email" name="email" placeholder="Email" required />
+      <input type="text" name="name" placeholder="Name" required class="signup-input" />
 
-  <input type="tel" name="phoneNumber" placeholder="Phone Number" required />
+      <input type="email" name="email" placeholder="Email" required class="signup-input" />
 
-  <label>Role:</label>
-  <input type="radio" name="role" value="client" checked /> Client
-  <input type="radio" name="role" value="owner" /> Owner
+      <input type="tel" name="phoneNumber" placeholder="Phone Number" required class="signup-input" />
 
-  <input type="password" name="password" placeholder="Password" required />
+      <div class="role-group">
+        <label>Role:</label>
+        <label><input type="radio" name="role" value="client" checked /> Client</label>
+        <label><input type="radio" name="role" value="owner" /> Owner</label>
+      </div>
 
-  <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+      <input type="password" name="password" placeholder="Password" required class="signup-input" />
 
-  <button type="submit">Sign Up</button>
-</form>
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" required class="signup-input" />
+
+      <button type="submit" class="signup-submit">Sign Up</button>
+
+    </form>
+  </div>
+</main>
 
 <%- include('../partials/footer.ejs') %>

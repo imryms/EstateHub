@@ -17,7 +17,7 @@
 
         <div class="appointment-card">
 
-          <p>Property: <%= appointment.propertyId.title %></p>
+          <p>Property: <%= appointment.propertyId?.title || "Property not found" %></p>
 
           <% if (user.role === "owner") { %>
             <p>Client: <%= appointment.clientId.name %></p>
@@ -26,7 +26,6 @@
           <p>Start: <%= new Date(appointment.startDateTime).toLocaleString() %></p>
           <p>End: <%= new Date(appointment.endDateTime).toLocaleString() %></p>
           <p>Status: <%= appointment.status %></p>
-          <p>Note: <%= appointment.note %></p>
 
           <div class="appointment-actions">
             <a href="/appointments/<%= appointment._id %>">
@@ -39,9 +38,7 @@
               <form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST">
                 <button type="submit">Cancel Appointment</button>
               </form>
-            </div>
 
-            <div>
               <a href="/appointments/<%= appointment._id %>/edit"> Edit Appointment </a>
             </div>
           <% } %>
