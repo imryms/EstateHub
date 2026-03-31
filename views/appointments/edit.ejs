@@ -6,6 +6,12 @@
   <div class="edit-appointment-box">
     <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="edit-appointment-form">
 
+      <%
+        const now = new Date()
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
+        const minDate = now.toISOString().slice(0,16)
+      %>
+
       <p class="edit-appointment-info">
         <span class="edit-label">Property:</span>
         <span class="edit-value"><%= appointment.propertyId?.title || "No title" %></span>
@@ -13,24 +19,12 @@
 
       <div class="edit-input-group">
         <label class="edit-input-label">Start Date & Time</label>
-        <input
-          type="datetime-local"
-          name="startDateTime"
-          value="<%= new Date(appointment.startDateTime).toISOString().slice(0,16) %>"
-          required
-          class="edit-input"
-        />
+        <input type="datetime-local" name="startDateTime" value="<%= new Date(appointment.startDateTime).toISOString().slice(0,16) %>" min="<%= minDate %>" required class="edit-input" />
       </div>
 
       <div class="edit-input-group">
         <label class="edit-input-label">End Date & Time</label>
-        <input
-          type="datetime-local"
-          name="endDateTime"
-          value="<%= new Date(appointment.endDateTime).toISOString().slice(0,16) %>"
-          required
-          class="edit-input"
-        />
+        <input type="datetime-local" name="endDateTime" value="<%= new Date(appointment.endDateTime).toISOString().slice(0,16) %>" min="<%= minDate %>" required class="edit-input" />
       </div>
 
       <div class="edit-input-group">
@@ -42,6 +36,7 @@
         <button type="submit" class="save-edit-button">Save Changes</button>
         <a href="/appointments/myAppointments" class="back-edit-button">Back</a>
       </div>
+
     </form>
   </div>
 </main>
