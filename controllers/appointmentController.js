@@ -90,36 +90,6 @@ const showAppointmentDetails = async (req, res) => {
   }
 }
 
-const updateAppointmentStatus = async (req, res) => {
-  try {
-    const appointment = await Appointment.findById(req.params.id).populate("propertyId")
-
-    if (!appointment) {
-      return res.status(404).send("Appointment not found")
-    }
-
-    if (appointment.propertyId.ownerId.toString() !== req.session.user._id.toString()) {
-      return res.status(403).send("Access denied")
-    }
-
-    const allowedStatus = ["confirmed", "cancelled", "completed"]
-
-    if (!allowedStatus.includes(req.body.status)) {
-      return res.status(400).send("Invalid status")
-    }
-
-    appointment.status = req.body.status
-
-    await appointment.save()
-
-    res.send(appointment)
-
-  } catch (error) {
-    console.error("Error updating appointment status:", error.message)
-    res.status(500).send("Something went wrong")
-  }
-}
-
 const deleteAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id)
@@ -227,7 +197,6 @@ module.exports = {
   createAppointment,
   myAppointment,
   showAppointmentDetails,
-  updateAppointmentStatus,
   deleteAppointment,
   updateAppointment,
   getNewAppointmentPage,

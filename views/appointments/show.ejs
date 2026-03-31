@@ -43,7 +43,7 @@
 
     <p class="appointment-line note-line">
       <span class="label-text">Note:</span>
-      <span class="value-text"><%= appointment.note %></span>
+      <span class="value-text"><%= appointment.note || "—" %></span>
     </p>
 
     <% if (user.role === "owner" && appointment.status === "pending") { %>
