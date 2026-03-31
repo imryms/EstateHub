@@ -1,0 +1,49 @@
+<%- include("../partials/header") %>
+
+<main class="edit-appointment-page">
+  <h1 class="edit-appointment-title">Edit Appointment</h1>
+
+  <div class="edit-appointment-box">
+    <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="edit-appointment-form">
+
+      <p class="edit-appointment-info">
+        <span class="edit-label">Property:</span>
+        <span class="edit-value"><%= appointment.propertyId?.title || "No title" %></span>
+      </p>
+
+      <div class="edit-input-group">
+        <label class="edit-input-label">Start Date & Time</label>
+        <input
+          type="datetime-local"
+          name="startDateTime"
+          value="<%= new Date(appointment.startDateTime).toISOString().slice(0,16) %>"
+          required
+          class="edit-input"
+        />
+      </div>
+
+      <div class="edit-input-group">
+        <label class="edit-input-label">End Date & Time</label>
+        <input
+          type="datetime-local"
+          name="endDateTime"
+          value="<%= new Date(appointment.endDateTime).toISOString().slice(0,16) %>"
+          required
+          class="edit-input"
+        />
+      </div>
+
+      <div class="edit-input-group">
+        <label class="edit-input-label">Note</label>
+        <textarea name="note" class="edit-input edit-textarea"><%= appointment.note || "" %></textarea>
+      </div>
+
+      <div class="edit-button">
+        <button type="submit" class="save-edit-button">Save Changes</button>
+        <a href="/appointments/myAppointments" class="back-edit-button">Back</a>
+      </div>
+    </form>
+  </div>
+</main>
+
+<%- include("../partials/footer") %>

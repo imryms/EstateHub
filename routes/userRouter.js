@@ -8,3 +8,4 @@ router.get("/profile", isLoggedIn, userController.getMyProfile)
 router.get("/:id", isLoggedIn, userController.getUserById)
 
 module.exports = router
+

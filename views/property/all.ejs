@@ -2,7 +2,8 @@
 
 <h2>All Properties</h2>
 <ul>
- <% properties.forEach(property => { %>
+<% properties.forEach(property => { %>
+
 <li>
   <a href="/properties/<%= property._id %>">
 
@@ -16,6 +17,7 @@
 
     <p class ="property-meta"> <strong>Price:</strong> $<%= property.price %> | <strong>purpose:</strong> <%= property.purpose %>
     </p>
+
   </a>
 </li>
 <% }) %>

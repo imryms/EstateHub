@@ -1,0 +1,106 @@
+<%- include("../partials/header") %>
+
+<main class="appointments-page">
+  <h1 class="appointments-title">
+    <%= user.role === "owner" ? "Manage Appointments" : "My Appointments" %>
+  </h1>
+
+  <% if (!appointments || appointments.length === 0) { %>
+    <p class="no-appointments-text">No appointments yet.</p>
+  <% } else { %>
+
+    <div class="appointments-list">
+
+      <% appointments.forEach((appointment) => { %>
+        <div class="appointment-card">
+
+          <p class="appointment-row">
+            <span class="row-label">Property:</span>
+            <span class="row-value">
+              <%= appointment.propertyId?.title || "No title" %>
+            </span>
+          </p>
+
+          <% if (user.role === "owner") { %>
+            <p class="appointment-row">
+              <span class="row-label">Client:</span>
+              <span class="row-value">
+                <%= appointment.clientId?.name %>
+              </span>
+            </p>
+          <% } %>
+
+          <p class="appointment-row">
+            <span class="row-label">Start:</span>
+            <span class="row-value">
+              <%= new Date(appointment.startDateTime).toLocaleString() %>
+            </span>
+          </p>
+
+          <p class="appointment-row">
+            <span class="row-label">End:</span>
+            <span class="row-value">
+              <%= new Date(appointment.endDateTime).toLocaleString() %>
+            </span>
+          </p>
+
+          <p class="appointment-row">
+            <span class="row-label">Status:</span>
+            <span class="row-value status-text">
+              <%= appointment.status %>
+            </span>
+          </p>
+
+          <p class="appointment-row note-row">
+            <span class="row-label">Note:</span>
+            <span class="row-value">
+              <%= appointment.note || "—" %>
+            </span>
+          </p>
+
+          <div class="appointment-actions">
+            <a href="/appointments/<%= appointment._id %>" class="details-button">
+              View Details
+            </a>
+          </div>
+
+          <% if (user.role === "client" && appointment.status === "pending") { %>
+          <div class="client-actions">
+            <form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST" class="small-form">
+              <button type="submit" class="delete-button">Cancel Appointment</button>
+            </form>
+          </div>
+        <% } %>
+
+  <% if (user.role === "client" && appointment.status === "pending") { %>
+  <div class="client-edit">
+    <a href="/appointments/<%= appointment._id %>/edit" class="edit-button">Edit Appointment </a>
+  </div>
+<% } %>
+
+          <% if (user.role === "owner" && appointment.status === "pending") { %>
+
+          <div class="owner-actions">
+
+            <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="inline-form">
+              <input type="hidden" name="status" value="confirmed" />
+              <button type="submit" class="confirm-button">Confirm</button>
+            </form>
+
+            <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="inline-form">
+              <input type="hidden" name="status" value="cancelled" />
+              <button type="submit" class="cancel-button">Cancel</button>
+            </form>
+
+          </div>
+        <% } %>
+
+        </div>
+      <% }) %>
+
+    </div>
+
+  <% } %>
+</main>
+
+<%- include("../partials/footer") %>

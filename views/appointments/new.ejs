@@ -1,0 +1,30 @@
+<%- include("../partials/header") %>
+
+<main class="make-appointment-page">
+  <h1 class="make-appointment-title">Book Appointment</h1>
+
+  <div class="make-appointment-box">
+    <form action="/appointments/<%= property._id %>" method="POST" class="make-form">
+
+      <div class="form-group">
+        <label>Start Date & Time</label>
+        <input type="datetime-local" name="startDateTime" required class="input-appointment"/>
+      </div>
+
+      <div class="form-group">
+        <label>End Date & Time</label>
+        <input type="datetime-local" name="endDateTime" required class="input-appointment"/>
+      </div>
+
+      <div class="form-group">
+        <label>Note</label>
+        <textarea name="note" class="input-appointment"></textarea>
+      </div>
+
+      <button type="submit" class="submit-button">Book</button>
+
+    </form>
+  </div>
+</main>
+
+<%- include("../partials/footer") %>

@@ -56,7 +56,7 @@
 
     <div>
       <label for="images">Image URL:</label>
-      <input type="text" name="images" id="images" value="<%= property.images[0] %>" />
+      <input type="text" name="images" id="images" value="<%= property.images && property.images.length ? property.images[0] : '' %>" />
     </div>
 
     <button type="submit">Update Listing</button>
