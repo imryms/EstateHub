@@ -20,6 +20,7 @@ const userRouter = require("./routes/userRouter.js")
 const propertyRouter = require("./routes/propertyRouter.js")
 const appointmentRouter = require("./routes/appointmentRouter.js")
 
+
 const dns = require("dns")
 dns.setServers(["8.8.8.8", "1.1.1.1"])
 

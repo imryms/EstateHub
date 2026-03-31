@@ -6,14 +6,20 @@
   <div class="make-appointment-box">
     <form action="/appointments/<%= property._id %>" method="POST" class="make-form">
 
+      <%
+        const now = new Date()
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
+        const minDate = now.toISOString().slice(0, 16)
+      %>
+
       <div class="form-group">
         <label>Start Date & Time</label>
-        <input type="datetime-local" name="startDateTime" required class="input-appointment"/>
+        <input type="datetime-local" name="startDateTime" required class="input-appointment" min="<%= minDate %>">
       </div>
 
       <div class="form-group">
         <label>End Date & Time</label>
-        <input type="datetime-local" name="endDateTime" required class="input-appointment"/>
+        <input type="datetime-local" name="endDateTime" required class="input-appointment" min="<%= minDate %>">
       </div>
 
       <div class="form-group">
