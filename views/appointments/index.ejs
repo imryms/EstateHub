@@ -1,103 +1,67 @@
 <%- include("../partials/header") %>
 
 <main class="appointments-page">
-  <h1 class="appointments-title">
-    <%= user.role === "owner" ? "Manage Appointments" : "My Appointments" %>
-  </h1>
+  <% if (user.role === "owner") { %>
+    <h1 class="appointments-title">Manage Appointments</h1>
+  <% } else { %>
+    <h1 class="appointments-title">My Appointments</h1>
+  <% } %>
 
   <% if (!appointments || appointments.length === 0) { %>
     <p class="no-appointments-text">No appointments yet.</p>
   <% } else { %>
 
     <div class="appointments-list">
+      <% for (let i = 0; i < appointments.length; i++) { %>
+        <% const appointment = appointments[i] %>
 
-      <% appointments.forEach((appointment) => { %>
         <div class="appointment-card">
 
-          <p class="appointment-row">
-            <span class="row-label">Property:</span>
-            <span class="row-value">
-              <%= appointment.propertyId?.title || "No title" %>
-            </span>
-          </p>
+          <p>Property: <%= appointment.propertyId.title %></p>
 
           <% if (user.role === "owner") { %>
-            <p class="appointment-row">
-              <span class="row-label">Client:</span>
-              <span class="row-value">
-                <%= appointment.clientId?.name %>
-              </span>
-            </p>
+            <p>Client: <%= appointment.clientId.name %></p>
           <% } %>
 
-          <p class="appointment-row">
-            <span class="row-label">Start:</span>
-            <span class="row-value">
-              <%= new Date(appointment.startDateTime).toLocaleString() %>
-            </span>
-          </p>
-
-          <p class="appointment-row">
-            <span class="row-label">End:</span>
-            <span class="row-value">
-              <%= new Date(appointment.endDateTime).toLocaleString() %>
-            </span>
-          </p>
-
-          <p class="appointment-row">
-            <span class="row-label">Status:</span>
-            <span class="row-value status-text">
-              <%= appointment.status %>
-            </span>
-          </p>
-
-          <p class="appointment-row note-row">
-            <span class="row-label">Note:</span>
-            <span class="row-value">
-              <%= appointment.note || "—" %>
-            </span>
-          </p>
+          <p>Start: <%= new Date(appointment.startDateTime).toLocaleString() %></p>
+          <p>End: <%= new Date(appointment.endDateTime).toLocaleString() %></p>
+          <p>Status: <%= appointment.status %></p>
+          <p>Note: <%= appointment.note %></p>
 
           <div class="appointment-actions">
-            <a href="/appointments/<%= appointment._id %>" class="details-button">
+            <a href="/appointments/<%= appointment._id %>">
               View Details
             </a>
           </div>
 
           <% if (user.role === "client" && appointment.status === "pending") { %>
-          <div class="client-actions">
-            <form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST" class="small-form">
-              <button type="submit" class="delete-button">Cancel Appointment</button>
-            </form>
-          </div>
-        <% } %>
+            <div>
+              <form action="/appointments/<%= appointment._id %>?_method=DELETE" method="POST">
+                <button type="submit">Cancel Appointment</button>
+              </form>
+            </div>
 
-  <% if (user.role === "client" && appointment.status === "pending") { %>
-  <div class="client-edit">
-    <a href="/appointments/<%= appointment._id %>/edit" class="edit-button">Edit Appointment </a>
-  </div>
-<% } %>
+            <div>
+              <a href="/appointments/<%= appointment._id %>/edit"> Edit Appointment </a>
+            </div>
+          <% } %>
 
           <% if (user.role === "owner" && appointment.status === "pending") { %>
+            <div>
+              <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST">
+                <input type="hidden" name="status" value="confirmed">
+                <button type="submit">Confirm</button>
+              </form>
 
-          <div class="owner-actions">
-
-            <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="inline-form">
-              <input type="hidden" name="status" value="confirmed" />
-              <button type="submit" class="confirm-button">Confirm</button>
-            </form>
-
-            <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="inline-form">
-              <input type="hidden" name="status" value="cancelled" />
-              <button type="submit" class="cancel-button">Cancel</button>
-            </form>
-
-          </div>
-        <% } %>
+              <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST">
+                <input type="hidden" name="status" value="cancelled">
+                <button type="submit">Cancel</button>
+              </form>
+            </div>
+          <% } %>
 
         </div>
-      <% }) %>
-
+      <% } %>
     </div>
 
   <% } %>

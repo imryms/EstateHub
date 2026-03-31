@@ -4,65 +4,38 @@
   <h1 class="appointment-title">Appointment Details</h1>
 
   <div class="appointment-box">
-    <p class="appointment-line">
-      <span class="label-text">Property:</span>
-      <span class="value-text"><%= appointment.propertyId.title %></span>
-    </p>
+
+    <p>Property: <%= appointment.propertyId.title %></p>
 
     <% if (user.role === "owner") { %>
-      <p class="appointment-line">
-        <span class="label-text">Client Name:</span>
-        <span class="value-text"><%= appointment.clientId.name %></span>
-      </p>
-
-      <p class="appointment-line">
-        <span class="label-text">Client Email:</span>
-        <span class="value-text"><%= appointment.clientId.email %></span>
-      </p>
-
-      <p class="appointment-line">
-        <span class="label-text">Client Phone:</span>
-        <span class="value-text"><%= appointment.clientId.phoneNumber %></span>
-      </p>
+      <p>Client Name: <%= appointment.clientId.name %></p>
+      <p>Client Email: <%= appointment.clientId.email %></p>
+      <p>Client Phone: <%= appointment.clientId.phoneNumber %></p>
     <% } %>
 
-    <p class="appointment-line">
-      <span class="label-text">Start:</span>
-      <span class="value-text"><%= new Date(appointment.startDateTime).toLocaleString() %></span>
-    </p>
-
-    <p class="appointment-line">
-      <span class="label-text">End:</span>
-      <span class="value-text"><%= new Date(appointment.endDateTime).toLocaleString() %></span>
-    </p>
-
-    <p class="appointment-line">
-      <span class="label-text">Status:</span>
-      <span class="value-text status-thing"><%= appointment.status %></span>
-    </p>
-
-    <p class="appointment-line note-line">
-      <span class="label-text">Note:</span>
-      <span class="value-text"><%= appointment.note %></span>
-    </p>
+    <p>Start: <%= new Date(appointment.startDateTime).toLocaleString() %></p>
+    <p>End: <%= new Date(appointment.endDateTime).toLocaleString() %></p>
+    <p>Status: <%= appointment.status %></p>
+    <p>Note: <%= appointment.note || "—" %></p>
 
     <% if (user.role === "owner" && appointment.status === "pending") { %>
-      <div class="owner-buttons">
-        <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="small-form">
+      <div>
+        <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST">
           <input type="hidden" name="status" value="confirmed">
-          <button type="submit" class="yes-btn">Confirm</button>
+          <button type="submit">Confirm</button>
         </form>
 
-        <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST" class="small-form">
+        <form action="/appointments/<%= appointment._id %>?_method=PUT" method="POST">
           <input type="hidden" name="status" value="cancelled">
-          <button type="submit" class="no-button">Cancel</button>
+          <button type="submit">Cancel</button>
         </form>
       </div>
     <% } %>
 
-    <div class="back-button-wrap">
-      <a href="/appointments/myAppointments" class="back-button">Back</a>
+    <div>
+      <a href="/appointments/myAppointments">Back</a>
     </div>
+
   </div>
 </main>
 

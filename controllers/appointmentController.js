@@ -25,7 +25,6 @@ const createAppointment = async (req, res) => {
   }
 }
 
-// Show all appointments for the logged-in user
 const myAppointment = async (req, res) => {
   try {
     let appointments
@@ -57,7 +56,6 @@ const myAppointment = async (req, res) => {
   }
 }
 
-// Show single appointment
 const showAppointmentDetails = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id)
@@ -87,36 +85,6 @@ const showAppointmentDetails = async (req, res) => {
   } catch (error) {
     console.error("Error showing appointment details:", error.message)
     res.send("Error loading appointment details")
-  }
-}
-
-const updateAppointmentStatus = async (req, res) => {
-  try {
-    const appointment = await Appointment.findById(req.params.id).populate("propertyId")
-
-    if (!appointment) {
-      return res.status(404).send("Appointment not found")
-    }
-
-    if (appointment.propertyId.ownerId.toString() !== req.session.user._id.toString()) {
-      return res.status(403).send("Access denied")
-    }
-
-    const allowedStatus = ["confirmed", "cancelled", "completed"]
-
-    if (!allowedStatus.includes(req.body.status)) {
-      return res.status(400).send("Invalid status")
-    }
-
-    appointment.status = req.body.status
-
-    await appointment.save()
-
-    res.send(appointment)
-
-  } catch (error) {
-    console.error("Error updating appointment status:", error.message)
-    res.status(500).send("Something went wrong")
   }
 }
 
@@ -227,7 +195,6 @@ module.exports = {
   createAppointment,
   myAppointment,
   showAppointmentDetails,
-  updateAppointmentStatus,
   deleteAppointment,
   updateAppointment,
   getNewAppointmentPage,
