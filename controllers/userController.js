@@ -16,12 +16,22 @@ const getMyProfile = async(req, res) => {
     let appointments = []
 
     if (user.role === "owner") {
-      properties = await Property.find({ ownerId: user._id })
-    }
+  properties = await Property.find({ ownerId: user._id })
+
+  const ownerPropertyIds = properties.map((property) => property._id)
+
+  appointments = await Appointment.find({
+    propertyId: { $in: ownerPropertyIds }
+  })
+    .populate("propertyId")
+    .populate("clientId")
+}
 
     if (user.role === "client") {
-      appointments = await Appointment.find({ clientId: user._id }).populate("propertyId")
-    }
+  appointments = await Appointment.find({ clientId: user._id })
+    .populate("propertyId")
+    .populate("clientId")
+}
 
     res.render("users/profile", {
       user,
