@@ -4,10 +4,8 @@
   <a href="/properties" class="cta-secondary"> Back to Listings</a>
 
   <article class="profile-card" style="margin-top: 20px;">
-    <span class="hero-badge"><%= property.status %></span>
     <h1><%= property.title %></h1>
-
-    <p>Status: <strong><%= property.status.toUpperCase() %></strong></p>
+    <span class="hero-badge"><%= property.status %></span>
 
     <% if (property.images.length > 0) { %>
         <img src="<%= property.images[0] %>" class="property-hero-img">
@@ -30,20 +28,21 @@
     </a>
     </div>
     <% } %>
-
     <% if (user && user._id === property.ownerId.toString()) { %>
-    <a href="/properties/<%= property._id %>/edit" class="cta-secondary">Edit</a>
-    <a href="/properties/<%= property._id %>/edit">Edit Property</a>
+
+    <div class="actions-container">
+
+    <a href="/properties/<%= property._id %>/edit" class="btn-action">Edit</a>
 
     <form action="/properties/<%= property._id %>?_method=PUT" method="POST">
       <input type="hidden" name="status" value="<%= property.status === 'active' ? 'paused' : 'active' %>">
-      <button type="submit">
+      <button type="submit" class="btn-action">
         <%= property.status === 'active' ? 'Pause' : 'Activate' %>
       </button>
     </form>
 
     <form action="/properties/<%= property._id %>?_method=DELETE" method="POST">
-      <button type="submit" style="color: red;">Delete Property</button>
+      <button type="submit" class="btn-action" style="color: #c62828;">Delete Property</button>
     </form>
 
   </div>

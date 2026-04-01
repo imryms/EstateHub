@@ -15,72 +15,67 @@
         <input type="text" name="title" id="title" value="<%= property ? property.title : '' %>" required>
       </div>
 
-    <div>
+    <div class="form-field">
       <label for="description">Description:</label>
-      <textarea name="description" id="description" required><%= property.description %></textarea>
-    </div>
       <textarea name="description" id="description" required><%= property && property.description ? property.description : '' %></textarea>
-      <button type="submit" class="cta-primary" style="width: 100%; border:none;">Save Listing</button>
 
-    <div>
-      <label for="type">Property Type:</label>
-      <select name="type" id="type" required>
-        <% const types = ['Apartment', 'House', 'Studio', 'Villa' , 'Land' , 'Building'] %>
-        <% types.forEach(t => { %>
-          <option value="<%= t %>" <%= property.type === t ? 'selected' : '' %>><%= t %></option>
-        <% }) %>
-      </select>
-    </div>
+      <div>
+        <label for="type">Property Type:</label>
+        <select name="type" id="type" required>
+          <% const types = ['Apartment', 'House', 'Studio', 'Villa' , 'Land' , 'Building'] %>
+          <% types.forEach(t => { %>
+            <option value="<%= t %>" <%= property.type === t ? 'selected' : '' %>><%= t %></option>
+            <% }) %>
+          </select>
+        </div>
 
-    <div>
-      <label>Purpose:</label>
-      <input type="radio" name="purpose" value="sale" id="sale" <%= property.purpose === 'sale' ? 'checked' : '' %>>
-      <label for="sale">For Sale</label>
+        <div>
+          <label>Purpose:</label>
+          <input type="radio" name="purpose" value="sale" id="sale" <%= property.purpose === 'sale' ? 'checked' : '' %>>
+          <label for="sale">For Sale</label>
 
-      <input type="radio" name="purpose" value="rent" id="rent" <%= property.purpose === 'rent' ? 'checked' : '' %>>
-      <label for="rent">For Rent</label>
-    </div>
+          <input type="radio" name="purpose" value="rent" id="rent" <%= property.purpose === 'rent' ? 'checked' : '' %>>
+          <label for="rent">For Rent</label>
+        </div>
 
-    <div>
-      <label for="price">Price:</label>
-      <input type="number" name="price" id="price" value="<%= property.price %>" min="0" required />
-    </div>
+        <div>
+          <label for="price">Price:</label>
+          <input type="number" name="price" id="price" value="<%= property.price %>" min="0" required />
+        </div>
 
-    <div>
-      <label for="address">Address:</label>
-      <input type="text" name="address" id="address" value="<%= property.address %>" required />
-    </div>
+        <div>
+          <label for="address">Address:</label>
+          <input type="text" name="address" id="address" value="<%= property.address %>" required />
+        </div>
 
-    <div>
-      <label for="status">Status:</label>
-      <select name="status" id="status" required>
-        <% const statuses = ['active', 'paused', 'sold', 'rented', 'archived'] %>
-        <% statuses.forEach(s => { %>
-          <option value="<%= s %>" <%= property.status === s ? 'selected' : '' %>><%= s.toUpperCase() %></option>
-        <% }) %>
-      </select>
-    </div>
+        <div>
+          <label for="status">Status:</label>
+          <select name="status" id="status" required>
+            <% const statuses = ['active', 'paused', 'sold', 'rented', 'archived'] %>
+            <% statuses.forEach(s => { %>
+              <option value="<%= s %>" <%= property.status === s ? 'selected' : '' %>><%= s.toUpperCase() %></option>
+              <% }) %>
+            </select>
+          </div>
 
-    <div>
-      <label>Image URLs:</label>
-      <% if (property.images && property.images.length) { %>
-        <% property.images.forEach(function(img, idx) { %>
-          <input type="text" name="images" value="<%= img %>" placeholder="Image URL <%= idx + 1 %>" />
-        <% }) %>
-      <% } else { %>
-        <input type="text" name="images" value="" placeholder="Image URL 1" />
-      <% } %>
-      <small>You can add or edit multiple image URLs. Leave blank to remove an image.</small>
-</div>
-</div>
-<%- include('../partials/footer.ejs') %>
+          <div>
+            <label>Image URLs:</label>
+            <% if (property.images && property.images.length) { %>
+              <% property.images.forEach(function(img, idx) { %>
+                <input type="text" name="images" value="<%= img %>" placeholder="Image URL <%= idx + 1 %>" />
+                <% }) %>
+                <% } else { %>
+                  <input type="text" name="images" value="" placeholder="Image URL 1" />
+                  <% } %>
+                </div>
+              </div>
 
-  <p><a href="/properties/<%= property._id %>">Cancel and go back</a></p>
-  <p>
-    <% if (property && property._id) { %>
-      <a href="/properties/<%= property._id %>">Cancel and go back</a>
-    <% } else { %>
-      <a href="/properties">Cancel and go back</a>
+              <button type="submit" class="cta-primary" style="width: 100%; border:none;">Save Listing</button>
+              <p>
+                <% if (property && property._id) { %>
+                  <a href="/properties/<%= property._id %>">Cancel and go back</a>
+                  <% } else { %>
+                    <a href="/properties">Cancel and go back</a>
     <% } %>
   </p>
 </div>
