@@ -1,26 +1,25 @@
 <%- include('../partials/header.ejs') %>
 
-<h2>All Properties</h2>
-<ul>
-<% properties.forEach(property => { %>
+<div class = "property-container">
 
-<li>
-  <a href="/properties/<%= property._id %>">
+<h2 class="section-title">All Properties</h2>
 
+<div class="property-grid"><% properties.forEach(property => { %>
+
+  <div class="property-card">  <a href="/properties/<%= property._id %>">
     <% if (property.images && property.images.length > 0) { %>
       <img src="<%= property.images[0] %>" width="200">
     <% } else { %>
       <p>No image available</p>
     <% } %>
 
+<div class="card-body">
     <h3><%= property.title %></h3>
-
-    <p class ="property-meta"> <strong>Price:</strong> $<%= property.price %> | <strong>purpose:</strong> <%= property.purpose %>
-    </p>
-
-  </a>
-</li>
+<p><strong>$<%= property.price.toLocaleString() %></strong> | <%= property.purpose %></p></div>
+</a>
+</div>
 <% }) %>
-</ul>
+</div>
+</div>
 
 <%- include('../partials/footer.ejs') %>
