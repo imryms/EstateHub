@@ -27,7 +27,7 @@
 
 ### ***Getting Started***
 
-##### When visiting the website, any person can view it as a guest. They will see the landing page, which includes a navigation bar for Home, Browse, Log In, and Register. However, to pick an appointment for visiting the site, they need to sign up or log in as a registered user. Once logged in, they can access the different sections of the website.
+##### When visiting the website, any person can view it as a guest. They will see the Home page, which includes a navigation bar for Home, Browse, Log In, and Sign Up. However, to pick an appointment for visiting the site, they need to sign up or log in as a registered user. Once logged in, they can access the different sections of the website.
 ##### A Trello board was used to keep track of development progress and can be viewed [here](https://trello.com/invite/b/69a006ae8a3cc03b2d643fa0/ATTI9da3a134643a9f8a88ee1663a02d9af3AD4FB79E/project-2).
 ##### The project Wireframe [here](https://www.figma.com/design/g8SFkUtXf5uk8j2oG0rDnV/EstateHub?node-id=0-1&t=JF4WQQyDL2GDva10-1).
 
@@ -42,10 +42,9 @@
 
 ### ***Future Updates***
 
-- [ ] Future Update 1
-- [ ] Future Update 2
-- [x] Completed Update
-- [x] ~~Strikethrough~~ Items Also
+- [ ] Add Feedback System For Owner Verification
+- [ ] Add Search and Filter option
+- [ ] Allow Users to save favorite properties
 ***
 
 ### ***Credits***
