@@ -33,11 +33,19 @@
 
 ***
 
-### ***Screenshots***
+### How does the website look like?
+
+**Home page**
+![Home page](image.png)
+
+**Add new Listing**
+![Add new Listing](image-1.png)
+
+**View property Type**
+![View property Type](image-2.png)
 
 ##### ERD
 ![ERD](./assests/ERD.png)
-
 
 
 ### ***Future Updates***
